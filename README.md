@@ -8,7 +8,7 @@ Python code using locust to get domain performance
 
 ### Installation
 
-Requires [Python](https://www.python.org/).
+Requires [Python](https://www.python.org/) 3.7.
 
 The recommended way to install is through [Pip](https://pypi.org/project/pip/).
 
