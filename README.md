@@ -1,6 +1,7 @@
 # Lumen Ala Performance
 
 [![Latest Version](https://img.shields.io/github/v/release/kiwfy/lumen-ala-performance.svg?style=flat-square)](https://github.com/kiwfy/lumen-ala-performance/releases)
+[![Build Status](https://img.shields.io/github/workflow/status/kiwfy/lumen-ala-performance/CI?label=ci%20build&style=flat-square)](https://github.com/kiwfy/lumen-ala-performance/actions?query=workflow%3ACI)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Python code using locust to get domain performance
