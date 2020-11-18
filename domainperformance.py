@@ -4,6 +4,7 @@ import requests
 from dotenv import load_dotenv
 from locust import between, events, HttpUser, task
 
+
 class DomainPerformance(HttpUser):
     load_dotenv()
 
@@ -93,6 +94,7 @@ class DomainPerformance(HttpUser):
             '/' + self.domain + '/dead_list/',
             headers={'Authorization': self.authToken, 'Context': self.context}
         )
+
 
 @events.init.add_listener
 def on_locust_init(environment, **_kwargs):
