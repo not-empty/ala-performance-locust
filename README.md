@@ -20,7 +20,7 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Put values in **CONTEXT**, **SECRET** and **TOKEN** environment because the script need to authenticate and verify all CRUD routes (Get this config in Lumen-Ala project).
+Put values in **CONTEXT**, **SECRET** and **TOKEN** environment because the script need to authenticate and verify all CRUD routes (Get this [config](https://github.com/kiwfy/lumen-ala/blob/master/config/token.php) in Lumen-Ala project).
 
 ### Run Cli interface
 
