@@ -1,2 +1,3 @@
 requests==2.23.0
 locust==1.0.3
+python-dotenv==0.15.0
