@@ -4,12 +4,11 @@ import requests
 from dotenv import load_dotenv
 from locust import between, events, HttpUser, task
 
-
 class DomainPerformance(HttpUser):
     load_dotenv()
 
     authToken = None
-    context = os.getenv('CONTEXT')
+    contextApi = os.getenv('CONTEXT')
     domain = os.getenv('DOMAIN')
     filterList = os.getenv('FILTER_LIST')
     host = os.getenv('HOST')
@@ -18,7 +17,7 @@ class DomainPerformance(HttpUser):
     objectIdToDelete = None
     secret = os.getenv('SECRET')
     token = os.getenv('TOKEN')
-    updateData = os.getenv('UPDATE_DATA')
+    updateData = json.loads(os.getenv('UPDATE_DATA'))
     wait_time = between(5, 15)
 
     def on_start(self):
@@ -41,7 +40,7 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'GET',
             '/' + self.domain + '/list',
-            headers={'Authorization': self.authToken, 'Context': self.context}
+            headers={'Authorization': self.authToken, 'Context': self.contextApi}
         )
 
     @task
@@ -49,7 +48,7 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'GET',
             '/' + self.domain + '/detail/' + self.objectId,
-            headers={'Authorization': self.authToken, 'Context': self.context}
+            headers={'Authorization': self.authToken, 'Context': self.contextApi}
         )
 
     @task
@@ -57,16 +56,16 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'PATCH',
             '/' + self.domain + '/edit/' + self.objectId,
-            headers={'Authorization': self.authToken, 'Context': self.context},
+            headers={'Authorization': self.authToken, 'Context': self.contextApi},
             data=self.updateData
         )
 
     @task
     def insert(self):
-        self.client.request(
+        request = self.client.request(
             'POST',
             '/' + self.domain + '/add/',
-            headers={'Authorization': self.authToken, 'Context': self.context},
+            headers={'Authorization': self.authToken, 'Context': self.contextApi},
             data=self.insertBody
         )
 
@@ -75,7 +74,7 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'GET',
             '/' + self.domain + '/list' + self.filterList,
-            headers={'Authorization': self.authToken, 'Context': self.context}
+            headers={'Authorization': self.authToken, 'Context': self.contextApi}
         )
 
     @task
@@ -83,7 +82,7 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'POST',
             '/' + self.domain + '/bulk/',
-            headers={'Authorization': self.authToken, 'Context': self.context},
+            headers={'Authorization': self.authToken, 'Context': self.contextApi},
             data={'ids[]': [self.objectId]}
         )
 
@@ -92,9 +91,8 @@ class DomainPerformance(HttpUser):
         self.client.request(
             'GET',
             '/' + self.domain + '/dead_list/',
-            headers={'Authorization': self.authToken, 'Context': self.context}
+            headers={'Authorization': self.authToken, 'Context': self.contextApi}
         )
-
 
 @events.init.add_listener
 def on_locust_init(environment, **_kwargs):
@@ -110,7 +108,7 @@ def on_locust_init(environment, **_kwargs):
 
     request = requests.post(
         DomainPerformance.host + '/' + DomainPerformance.domain + '/add',
-        headers={'Authorization': token, 'Context': DomainPerformance.context},
+        headers={'Authorization': token, 'Context': DomainPerformance.contextApi},
         data=DomainPerformance.insertBody
     )
 
