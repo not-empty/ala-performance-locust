@@ -29,7 +29,7 @@ class DomainPerformance(HttpUser):
             }
         )
 
-        self.authToken = json.loads(request.content)['data']['token']
+        self.authToken = json.loads(request.content)['response']['token']
 
     @task
     def healthCheck(self):
@@ -104,7 +104,7 @@ def on_locust_init(environment, **_kwargs):
         }
     )
 
-    token = json.loads(request.content)['data']['token']
+    token = json.loads(request.content)['response']['token']
 
     request = requests.post(
         DomainPerformance.host + '/' + DomainPerformance.domain + '/add',
@@ -112,4 +112,4 @@ def on_locust_init(environment, **_kwargs):
         data=DomainPerformance.insertBody
     )
 
-    DomainPerformance.objectId = json.loads(request.content)['data']['id']
+    DomainPerformance.objectId = json.loads(request.content)['response']['id']
