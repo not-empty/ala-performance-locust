@@ -1,7 +1,6 @@
 # Lumen Ala Performance
 
-[![Latest Version](https://img.shields.io/github/v/release/kiwfy/lumen-ala-performance.svg?style=flat-square)](https://github.com/kiwfy/lumen-ala-performance/releases)
-[![Build Status](https://img.shields.io/github/workflow/status/kiwfy/lumen-ala-performance/CI?label=ci%20build&style=flat-square)](https://github.com/kiwfy/lumen-ala-performance/actions?query=workflow%3ACI)
+[![Latest Version](https://img.shields.io/github/v/release/not-empty/ala-performance-locust?style=flat-square)](https://github.com/not-empty/lumen-ala-performance/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Python code using locust to get domain performance
@@ -20,7 +19,7 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Put values in **CONTEXT**, **SECRET** and **TOKEN** environment because the script need to authenticate and verify all CRUD routes (Get this [config](https://github.com/kiwfy/lumen-ala/blob/master/config/token.php) in Lumen-Ala project).
+Put values in **CONTEXT**, **SECRET** and **TOKEN** environment because the script need to authenticate and verify all CRUD routes (Get this [config](https://github.com/not-empty/ala-microframework-php/blob/master/config/token.php) in Lumen-Ala project).
 
 ### Run Cli interface
 
@@ -49,4 +48,4 @@ Want to contribute? Great!
 The project using a simple code.
 Make a change in your file and be careful with your updates!
 
-**Kiwfy - Open your code, open your mind!**
+**Not Empty Foundation - Free codes, full minds**
