@@ -7,29 +7,20 @@ from locust import between, events, HttpUser, task
 class DomainPerformance(HttpUser):
     load_dotenv()
 
-    authToken = None
     contextApi = os.getenv('CONTEXT')
     domain = os.getenv('DOMAIN')
     filterList = os.getenv('FILTER_LIST')
     host = os.getenv('HOST')
     insertBody = json.loads(os.getenv('INSERT_DATA'))
-    objectId = None
-    objectIdToDelete = None
     secret = os.getenv('SECRET')
     token = os.getenv('TOKEN')
     updateData = json.loads(os.getenv('UPDATE_DATA'))
+
+    authToken = None
+    objectId = None
+    oldObjectId = None
+    objectIdToDelete = None
     wait_time = between(5, 15)
-
-    def on_start(self):
-        request = self.client.post(
-            '/auth/generate',
-            {
-                'token': self.token,
-                'secret': self.secret
-            }
-        )
-
-        self.authToken = json.loads(request.content)['response']['token']
 
     @task
     def healthCheck(self):
@@ -69,6 +60,9 @@ class DomainPerformance(HttpUser):
             data=self.insertBody
         )
 
+        self.oldObjectId = self.objectId
+        self.objectId = json.loads(request.content)['response']['id']
+
     @task
     def listWithParam(self):
         self.client.request(
@@ -83,7 +77,7 @@ class DomainPerformance(HttpUser):
             'POST',
             '/' + self.domain + '/bulk/',
             headers={'Authorization': self.authToken, 'Context': self.contextApi},
-            data={'ids[]': [self.objectId]}
+            data={'ids[]': [self.oldObjectId, self.objectId]}
         )
 
     @task
@@ -104,11 +98,11 @@ def on_locust_init(environment, **_kwargs):
         }
     )
 
-    token = json.loads(request.content)['response']['token']
+    DomainPerformance.authToken = json.loads(request.content)['response']['token']
 
     request = requests.post(
         DomainPerformance.host + '/' + DomainPerformance.domain + '/add',
-        headers={'Authorization': token, 'Context': DomainPerformance.contextApi},
+        headers={'Authorization': DomainPerformance.authToken, 'Context': DomainPerformance.contextApi},
         data=DomainPerformance.insertBody
     )
 

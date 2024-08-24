@@ -5,6 +5,9 @@
 
 Python code using locust to get domain performance
 
+![Locust Dashboard](./performance.png)
+
+
 ### Installation
 
 Requires [Python](https://www.python.org/) 3.7.
